@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="egovframework.sample.dept.mapper.DeptMapper">
+
+	<select id="retrieveDeptList" parameterType="deptVO" resultType="deptVO">
+	    <![CDATA[
+	        SELECT
+	               DEPT.DEPTNO,
+	               DEPT.DEPTNM,
+	               DEPT.DEPTLOC,
+	               DEPT.DEPTTEL
+	          FROM DEPARTMENT DEPT
+	          WHERE 1=1
+	    ]]>
+	    <if test="searchKeyword != null">
+	        <choose>
+	            <when test="searchCondition == 1">
+	                 AND DEPT.DEPTNO LIKE '%'|| #{searchKeyword} ||'%'
+	            </when>
+	            <otherwise>
+	                AND DEPT.DEPTNM LIKE '%'|| #{searchKeyword} ||'%'
+	            </otherwise>
+	        </choose>
+		</if>
+		<![CDATA[		
+			ORDER BY DEPT.DEPTNO DESC
+			LIMIT #{recordCountPerPage} OFFSET #{firstIndex}
+		]]>
+	</select>
+
+	<select id="retrieveDept" parameterType="deptVO" resultType="deptVO">
+	    <![CDATA[
+	        SELECT
+	               DEPT.DEPTNO,
+	               DEPT.DEPTNM,
+	               DEPT.DEPTLOC,
+	               DEPT.DEPTTEL
+	          FROM DEPARTMENT DEPT
+		     WHERE DEPT.DEPTNO = #{deptNo}
+		]]>
+	</select>
+
+	<select id="retrieveDeptListTotCnt" parameterType="searchVO" resultType="int">
+	    <![CDATA[
+	        SELECT COUNT(*)
+	         FROM DEPARTMENT DEPT
+	         WHERE 1=1
+		]]>
+	    <if test="searchKeyword != null">
+	        <choose>
+	            <when test="searchCondition == 1">
+	                 AND DEPT.DEPTNO LIKE '%'|| #{searchKeyword} ||'%'
+	            </when>
+	            <otherwise>
+	                AND DEPT.DEPTNM LIKE '%'|| #{searchKeyword} ||'%'
+	            </otherwise>
+	        </choose>
+		</if>
+	</select>
+	
+	<update id="updateDept" parameterType="deptVO">
+		<![CDATA[
+	        UPDATE DEPARTMENT DEPT
+	           SET DEPT.DEPTNM = #{deptNm},
+	               DEPT.DEPTLOC = #{deptLoc},
+	               DEPT.DEPTTEL = #{deptTel}
+		     WHERE DEPT.DEPTNO = #{deptNo}
+		]]>
+	</update>
+
+	<insert id="insertDept" parameterType="deptVO">
+		<![CDATA[
+			INSERT INTO DEPARTMENT (DEPTNO, DEPTNM, DEPTLOC, DEPTTEL)
+			VALUES (#{deptNo}, #{deptNm}, #{deptLoc}, #{deptTel})
+		]]>
+	</insert>
+
+	<delete id="deleteDept" parameterType="deptVO">
+		<![CDATA[
+			DELETE FROM DEPARTMENT DEPT
+			 WHERE DEPT.DEPTNO = #{deptNo}
+		]]>
+	</delete>
+
+</mapper>

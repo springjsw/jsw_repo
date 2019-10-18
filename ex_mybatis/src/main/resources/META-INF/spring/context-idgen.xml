@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+	http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <!-- 사원번호 생성 -->
+	<bean name="egovIdGnrServiceEmp"
+		class="egovframework.rte.fdl.idgnr.impl.EgovTableIdGnrService"
+		destroy-method="destroy">
+		<property name="dataSource" ref="dataSource" />
+		<property name="strategy" ref="mixPrefixEmployee" />
+		<property name="blockSize" value="1" />
+		<property name="table" value="IDS" />
+		<property name="tableName" value="EMPLOYEE" />
+	</bean>
+	<bean name="mixPrefixEmployee"
+		class="egovframework.rte.fdl.idgnr.impl.strategy.EgovIdGnrStrategyImpl">
+		<property name="prefix" value="EMPLOYEE-" />
+		<property name="cipers" value="8" />
+		<property name="fillChar" value="0" />
+	</bean>
+
+	<!-- 부서번호 생성 -->
+	<bean name="egovIdGnrServiceDept"
+		class="egovframework.rte.fdl.idgnr.impl.EgovTableIdGnrService"
+		destroy-method="destroy">
+		<property name="dataSource" ref="dataSource" />
+		<property name="strategy" ref="mixPrefixDepartmet" />
+		<property name="blockSize" value="1" />
+		<property name="table" value="IDS" />
+		<property name="tableName" value="DEPARTMENT" />
+	</bean>
+	<bean name="mixPrefixDepartmet"
+		class="egovframework.rte.fdl.idgnr.impl.strategy.EgovIdGnrStrategyImpl">
+		<property name="prefix" value="DEPARTMENT-" />
+		<property name="cipers" value="8" />
+		<property name="fillChar" value="0" />
+	</bean>
+</beans>

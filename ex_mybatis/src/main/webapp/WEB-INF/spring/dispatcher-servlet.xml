@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+				http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
+
+	<!--
+		- The controllers are autodetected POJOs labeled with the @Controller annotation.
+	-->
+	<context:component-scan base-package="egovframework">
+		<context:include-filter type="annotation" expression="org.springframework.stereotype.Controller"/>
+	</context:component-scan>
+	
+	<!--
+        - This bean resolves specific types of exceptions to corresponding logical view names for error views. 
+        - The default behaviour of DispatcherServlet is to propagate all exceptions to the servlet container: 
+        - this will happen here with all other types of exceptions.
+    -->
+	<bean class="org.springframework.web.servlet.handler.SimpleMappingExceptionResolver">
+		<property name="defaultErrorView" value="cmmn/bizError" />
+		<property name="exceptionMappings">
+			<props>
+                <prop key="org.springframework.dao.DataAccessException">/cmmn/dataAccessFailure</prop>
+                <prop key="org.springframework.transaction.TransactionException">/cmmn/transactionFailure</prop>
+                <prop key="egovframework.rte.fdl.cmmn.exception.EgovBizException">/cmmn/bizError</prop>
+			</props>
+		</property>
+	</bean>
+
+	<!--
+        - This bean configures the 'prefix' and 'suffix' properties of InternalResourceViewResolver, which resolves logical view names returned by Controllers. 
+        - For example, a logical view name of "vets" will be mapped to "/WEB-INF/jsp/vets.jsp".
+    -->
+	<bean class="org.springframework.web.servlet.view.InternalResourceViewResolver" p:viewClass="org.springframework.web.servlet.view.JstlView"  
+	    p:prefix="/WEB-INF/jsp/egovframework/" p:suffix=".jsp" />
+	
+	<!-- Pagination Tag -->
+    <bean id="imageRenderer" class="egovframework.sample.common.EgovImgPaginationRenderer" />
+
+    <bean id="paginationManager" class="egovframework.rte.ptl.mvc.tags.ui.pagination.DefaultPaginationManager">
+        <property name="rendererType">
+            <map>
+                <entry key="image" value-ref="imageRenderer"/> 
+            </map>
+        </property>
+    </bean>
+	<!-- Pagination Tag -->
+</beans>

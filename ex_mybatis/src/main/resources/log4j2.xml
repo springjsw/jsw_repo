@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<Configuration status="error">
+    <Appenders>
+        <Console name="console">
+            <PatternLayout pattern="%d %5p [%c] %m%n" />
+        </Console>
+    </Appenders>
+    
+    <Loggers>
+        <Logger name="egovframework" level="debug" additivity="false">
+            <AppenderRef ref="console" />
+        </Logger>
+        <Logger name="org.springframework" level="debug" additivity="false">
+            <AppenderRef ref="console" />
+        </Logger>
+        
+        <Logger name="java.sql" level="info" additivity="false">
+            <AppenderRef ref="console" />
+        </Logger>
+        <Logger name="jdbc.sqltiming" level="debug" additivity="false">
+            <AppenderRef ref="console" />
+        </Logger>
+        <Logger name="jdbc.sqlonly" level="off" additivity="false">
+            <AppenderRef ref="console" />
+        </Logger>
+        <Logger name="jdbc.audit" level="off" additivity="false">
+            <AppenderRef ref="console" />
+        </Logger>
+        <Logger name="jdbc.resultset" level="off" additivity="false">
+            <AppenderRef ref="console" />
+        </Logger>
+        <Logger name="jdbc.resultsettable" level="debug" additivity="false">
+            <AppenderRef ref="console" />
+        </Logger>
+        <Logger name="jdbc.connetion" level="off" additivity="false">
+            <AppenderRef ref="console" />
+        </Logger>
+        <Root level="info">
+            <AppenderRef ref="console" />
+        </Root>         
+    </Loggers>
+</Configuration>
