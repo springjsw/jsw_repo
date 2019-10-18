@@ -35,6 +35,7 @@ import egovframework.sample.dept.domain.DeptVO;
  * 
  * </pre>
  */
+
 @Mapper("deptMapper")
 public interface DeptMapper {
 
