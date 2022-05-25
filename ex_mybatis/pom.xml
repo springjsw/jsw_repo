@@ -10,7 +10,7 @@
 	<url>http://maven.apache.org</url>
 
 	<properties>
-		<spring.maven.artifact.version>4.3.16.RELEASE</spring.maven.artifact.version>
+		<spring.maven.artifact.version>5.2.22.RELEASE</spring.maven.artifact.version>
 		<egovframework.version>3.8.0</egovframework.version>
 	</properties>
 
